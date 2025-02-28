@@ -5,8 +5,8 @@ export interface GetAllPasswordsResponse {
 
 export interface PasswordEntryResponse {
     id: number;
-    entryName: number;
-    username: number;
-    password: number;
+    entryName: string;
+    username: string;
+    password: string;
 }
 

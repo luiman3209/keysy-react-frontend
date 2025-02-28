@@ -9,8 +9,13 @@ export const loginUser = async (email: string, password: string) => {
         const response = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
         const token = response.data.token;
 
-        // Store token securely
-        localStorage.setItem("jwt", token);
+        // Store token and timestamp
+        const tokenData = {
+            token: token,
+            timestamp: Date.now(), // Current timestamp in milliseconds
+        };
+
+        localStorage.setItem("jwtData", JSON.stringify(tokenData));
 
         return token;
     } catch (error) {
@@ -21,7 +26,28 @@ export const loginUser = async (email: string, password: string) => {
 
 // Function to get JWT token from storage
 export const getAuthToken = () => {
-    return localStorage.getItem("jwt");
+    const jwtDataString = localStorage.getItem("jwtData");
+
+    if (!jwtDataString) {
+        return null; // No token data found
+    }
+
+    const jwtData = JSON.parse(jwtDataString);
+
+    if (!jwtData || !jwtData.token || !jwtData.timestamp) {
+        localStorage.removeItem("jwtData"); // Remove invalid data
+        return null;
+    }
+
+    const expirationTime = 10 * 60 * 1000; // 10 minutes in milliseconds
+    const currentTime = Date.now();
+
+    if (currentTime - jwtData.timestamp > expirationTime) {
+        localStorage.removeItem("jwtData"); // Remove expired token
+        return null; // Token expired
+    }
+
+    return jwtData.token; // Return the valid token
 };
 
 // Axios instance with JWT token in headers
