@@ -28,9 +28,9 @@ export const getPassword = async (id: number): Promise<PasswordEntryResponse> =>
 };
 
 // Add a new password entry
-export const addPassword = async (website: string, username: string, password: string): Promise<PasswordEntryResponse> => {
+export const addPassword = async (entryName: string, username: string, password: string): Promise<PasswordEntryResponse> => {
     try {
-        const response = await axiosAuth.post(PASSWORDS_API, { website, username, password });
+        const response = await axiosAuth.post(PASSWORDS_API, { entryName, username, password });
         return response.data;
     } catch (error) {
         console.error("Error adding password entry", error);
@@ -39,9 +39,9 @@ export const addPassword = async (website: string, username: string, password: s
 };
 
 // Update an existing password entry
-export const updatePassword = async (id: number, website: string, username: string, password: string): Promise<PasswordEntryResponse> => {
+export const updatePassword = async (id: number, entryName: string, username: string, password: string): Promise<PasswordEntryResponse> => {
     try {
-        const response = await axiosAuth.put(`${PASSWORDS_API}/${id}`, { website, username, password });
+        const response = await axiosAuth.put(`${PASSWORDS_API}/${id}`, { entryName, username, password });
         return response.data;
     } catch (error) {
         console.error(`Error updating password with ID ${id}`, error);
