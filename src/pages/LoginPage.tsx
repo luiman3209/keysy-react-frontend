@@ -26,12 +26,13 @@ export default function LoginPage() {
         <div className="flex items-center justify-center min-h-screen bg-black">
             <Card className="w-[400px] shadow-lg">
                 <CardHeader>
-                    <CardTitle className="text-center text-2xl font-bold">Keysy Login</CardTitle>
+                    <img src="images/logo_crop.png" alt="Logo" className="" />
+                    <CardTitle className="text-center text-2xl ">Login</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">
                         <div>
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email" className="py-2">Email</Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -41,7 +42,7 @@ export default function LoginPage() {
                             />
                         </div>
                         <div>
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password" className="py-2">Password</Label>
                             <Input
                                 id="password"
                                 type="password"

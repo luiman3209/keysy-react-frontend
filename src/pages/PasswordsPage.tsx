@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { getPasswords } from "@/services/passwordService";
 import { PasswordEntryResponse } from "@/types/passwordTypes";
 import React, { useEffect, useState } from "react";
+import { Plus } from 'lucide-react';
 
 
 const PasswordsPage: React.FC = () => {
@@ -49,17 +50,13 @@ const PasswordsPage: React.FC = () => {
     }, []);
 
     return (
-        <div>
+        <div className="min-h-screen">
             <Navbar />
             <div className="max-w-lg mx-auto p-6">
-                <div className="flex justify-between items-center">
-                    <h1 className="text-2xl font-bold mb-4">Your Passwords</h1>
+                <div className="flex justify-between items-center py-4">
+                    <h1 className="text-2xl">Your Passwords</h1>
                     <Button onClick={handleNewPasswordWindow}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M8 12h8" />
-                            <path d="M12 8v8" />
-                        </svg>
+                        <Plus fill='currentColor' className="w-4 h-4 " />
                     </Button>
                 </div>
 
@@ -76,7 +73,13 @@ const PasswordsPage: React.FC = () => {
                             </Card>
                         ))
                     ) : (
-                        <p>No passwords saved.</p>
+                        <div className="flex flex-col items-center justify-center h-full">
+                            <p className="text-gray-700 p-4">No passwords saved.</p>
+                            <Button onClick={handleNewPasswordWindow}>
+                                <Plus fill='currentColor' className="w-4 h-4 " /> Add new password
+                            </Button>
+                        </div>
+
                     )}
                 </div>
             </div>

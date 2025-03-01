@@ -1,3 +1,4 @@
+import { X } from 'lucide-react';
 import React from 'react';
 
 interface ModalProps {
@@ -16,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
                     className="absolute top-2 right-2 text-gray-500 m-2"
                     onClick={onClose}
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                    <X fill='currentColor' className="w-6 h-6 " />
                 </button>
                 {children}
             </div>

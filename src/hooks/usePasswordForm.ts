@@ -16,13 +16,18 @@ export const usePasswordForm = (passwordToEdit?: PasswordEntryResponse) => {
     });
     const [error, setError] = useState<string | null>(null);
 
+    // Store the original data to compare later and avoid useless api calls
+    const [originalData, setOriginalData] = useState<PasswordFormState | null>(null);
+
     useEffect(() => {
         if (passwordToEdit) {
-            setFormData({
+            const original = {
                 entryName: passwordToEdit.entryName,
                 username: passwordToEdit.username,
                 password: passwordToEdit.password,
-            });
+            };
+            setFormData(original);
+            setOriginalData(original);
         }
     }, [passwordToEdit]);
 
@@ -34,17 +39,29 @@ export const usePasswordForm = (passwordToEdit?: PasswordEntryResponse) => {
         }));
     };
 
+    // Check if there are changes compared to the original data
+    const hasChanges = () => {
+        if (!originalData) return false;
+        return (
+            formData.entryName !== originalData.entryName ||
+            formData.username !== originalData.username ||
+            formData.password !== originalData.password
+        );
+    };
+
     const handleSubmit = async () => {
         try {
             if (passwordToEdit) {
-                await updatePassword(passwordToEdit.id, formData.entryName, formData.username, formData.password);
+                if (hasChanges()) {
+                    await updatePassword(passwordToEdit.id, formData.entryName, formData.username, formData.password);
+                }
             } else {
                 await addPassword(formData.entryName, formData.username, formData.password);
             }
-            return true; // Success
+            return true;
         } catch {
             setError('Failed to save password. Please try again.');
-            return false; // Error
+            return false;
         }
     };
 
